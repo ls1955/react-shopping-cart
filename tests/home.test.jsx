@@ -10,4 +10,10 @@ describe("home", () => {
 
     expect(screen.queryByText(/welcome to the store/i)).toBeInTheDocument();
   });
+
+  it("has a navigation bar", () => {
+    render(<Home />, { wrapper: BrowserRouter });
+
+    expect(screen.queryByRole("navigation")).toBeInTheDocument();
+  });
 });
