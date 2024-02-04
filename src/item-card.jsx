@@ -1,35 +1,24 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 
-export default function ItemCard({
-  title,
-  quantity,
-  isInCart = false,
-  onAdd,
-  onRemove,
-}) {
+import { CartContext } from "./contexts/cart-context";
+
+export default function ItemCard({ title }) {
+  const { cart, setCart } = useContext(CartContext);
+  const { quantity = 1 } = cart[title] ?? {};
+
+  const handleChange = ({ target: { value } }) => {
+    setCart({ ...cart, [title]: { quantity: value } });
+  };
+
   return (
     <div>
       <p>{title}</p>
-      <input
-        type="number"
-        name="quantity"
-        id="quantity"
-        defaultValue="1"
-        value={quantity}
-      />
-      {isInCart ? (
-        <button onClick={onRemove}>Remove</button>
-      ) : (
-        <button onClick={onAdd}>Add</button>
-      )}
+      <input type="number" value={quantity} onChange={handleChange} />
     </div>
   );
 }
 
 ItemCard.propTypes = {
-  title: PropTypes.string,
-  quantity: PropTypes.number,
-  isInCart: PropTypes.bool,
-  onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
+  title: PropTypes.string.isRequired,
 };

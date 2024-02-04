@@ -3,74 +3,79 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import ItemCard from "../src/item-card";
+import { CartContext } from "../src/contexts/cart-context";
 
-// setup props
-const title = "tuna";
-const onAdd = vi.fn();
-const onRemove = vi.fn();
-const defaultProps = { title, onAdd, onRemove, isInCart: false };
+// Renders *ui* with CartContext.Provider as a wrapper.
+const customRender = (ui, props = {}, { ...renderOptions } = {}) => {
+  return render(
+    <CartContext.Provider {...props}>{ui}</CartContext.Provider>,
+    renderOptions
+  );
+};
 
 describe("item card", () => {
   it("displays the given title", () => {
-    render(<ItemCard {...defaultProps} />);
+    render(<ItemCard title="tuna" />);
 
-    expect(screen.queryByText(title)).toBeInTheDocument();
+    expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
   it("has a quantity of 1 by default", () => {
-    render(<ItemCard {...defaultProps} />);
+    render(<ItemCard title="tuna" />);
 
     expect(screen.getByRole("spinbutton").value).toEqual("1");
   });
 
-  it("quantity can be set via prop", () => {
-    render(<ItemCard {...defaultProps} quantity={100}/>)
+  it("shows quantity from CartContext", () => {
+    const value = { cart: { tuna: { quantity: 999 } } };
 
-    expect(screen.getByRole("spinbutton").value).toEqual("100")
-  })
-
-  it("changes quantity via user input", async () => {
-    const user = userEvent.setup();
-
-    render(<ItemCard {...defaultProps} />);
-
-    await user.clear(screen.getByRole("spinbutton"));
-    await user.type(screen.getByRole("spinbutton"), "999");
+    customRender(<ItemCard title="tuna" />, {value});
 
     expect(screen.getByRole("spinbutton").value).toEqual("999");
   });
 
-  it("displays an add button when not in cart", () => {
-    render(<ItemCard {...defaultProps} />);
-
-    expect(screen.queryByRole("button", { name: /add/i })).toBeInTheDocument();
-  });
-
-  it("calls onAdd handler when user clicked add button", async () => {
+  it("calls setCart when user update quantity field", async () => {
     const user = userEvent.setup();
+    const value = {cart: {}, setCart: vi.fn()}
 
-    render(<ItemCard {...defaultProps} />);
+    customRender(<ItemCard title="tuna" />, {value});
 
-    await user.click(screen.getByRole("button", { name: /add/i }));
+    await user.type(screen.getByRole("spinbutton"), "999");
 
-    expect(onAdd).toHaveBeenCalledOnce();
+    expect(value.setCart).toBeCalled()
   });
 
-  it("displays a remove button when in cart", () => {
-    render(<ItemCard {...defaultProps} isInCart />);
+  // it.skip("displays an add button when not in cart", () => {
+  //   render(<ItemCard title={"tuna"} />);
 
-    expect(
-      screen.queryByRole("button", { name: /remove/i })
-    ).toBeInTheDocument();
-  });
+  //   expect(screen.queryByRole("button", { name: /add/i })).toBeInTheDocument();
+  // });
 
-  it("calls onRemove handler when user clicked remove button", async () => {
-    const user = userEvent.setup();
+  // it.skip("calls onAdd handler when user clicked add button", async () => {
+  //   const user = userEvent.setup();
 
-    render(<ItemCard {...defaultProps} isInCart />);
+  //   render(<ItemCard title={"tuna"} />);
 
-    await user.click(screen.getByRole("button", { name: /remove/i }));
+  //   await user.click(screen.getByRole("button", { name: /add/i }));
 
-    expect(onRemove).to.toHaveBeenCalledOnce();
-  });
+  //   expect(onAdd).toHaveBeenCalledOnce();
+  // });
+
+  // it.skip("displays a remove button when in cart", () => {
+  //   render(<ItemCard title={"tuna"} isInCart />);
+
+  //   expect(
+  //     screen.queryByRole("button", { name: /remove/i })
+  //   ).toBeInTheDocument();
+  // });
+
+  // it.skip("calls onRemove handler when user clicked remove button", async () => {
+  //   const user = userEvent.setup();
+
+  //   render(<ItemCard title={"tuna"} isInCart />);
+
+  //   await user.click(screen.getByRole("button", { name: /remove/i }));
+
+  //   expect(onRemove).to.toHaveBeenCalledOnce();
+  // });
 });
