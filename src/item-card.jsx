@@ -11,10 +11,10 @@ export default function ItemCard({ title }) {
     setCart({ ...cart, [title]: { quantity: value, isInCart } });
   };
   const handleAdd = () => {
-    setCart({ ...cart, [title]: { quantity, isInCart: true } });
+    setCart({ ...cart, [title]: { isInCart: true, quantity } });
   };
   const handleRemove = () => {
-    setCart({ ...cart, [title]: { quantity, isInCart: false } });
+    setCart({ ...cart, [title]: { isInCart: false, quantity } });
   };
 
   return (
