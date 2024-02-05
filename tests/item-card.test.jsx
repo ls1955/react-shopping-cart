@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import ItemCard from "../src/item-card";
+import ItemCard from "../src/components/item-card";
 import renderWithCartProvider from "./helpers/render-with-cart-provider";
 
 describe("item card", () => {
