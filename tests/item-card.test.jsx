@@ -3,15 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import ItemCard from "../src/item-card";
-import { CartContext } from "../src/contexts/cart-context";
-
-// Renders *ui* with CartContext.Provider as wrapper.
-const renderWithProvider = (ui, { providerProps = {}, ...options }) => {
-  return render(
-    <CartContext.Provider {...providerProps}>{ui}</CartContext.Provider>,
-    options
-  );
-};
+import renderWithCartProvider from "./helpers/render-with-cart-provider";
 
 describe("item card", () => {
   it("shows given title", () => {
@@ -23,7 +15,9 @@ describe("item card", () => {
   it("shows quantity from CartContext", () => {
     const value = { cart: { tuna: { quantity: 999 } } };
 
-    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value },
+    });
 
     expect(screen.getByRole("spinbutton").value).toEqual("999");
   });
@@ -32,7 +26,9 @@ describe("item card", () => {
     const user = userEvent.setup();
     const value = { cart: {}, setCart: vi.fn() };
 
-    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value },
+    });
 
     await user.type(screen.getByRole("spinbutton"), "999");
 
@@ -42,7 +38,9 @@ describe("item card", () => {
   it("displays add button when not in cart", () => {
     const value = { cart: { tuna: { isInCart: false } } };
 
-    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value },
+    });
 
     expect(screen.queryByRole("button", { name: /add/i })).toBeInTheDocument();
   });
@@ -51,7 +49,9 @@ describe("item card", () => {
     const user = userEvent.setup();
     const value = { cart: {}, setCart: vi.fn() };
 
-    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value },
+    });
 
     await user.click(screen.getByRole("button", { name: /add/i }));
 
@@ -61,7 +61,9 @@ describe("item card", () => {
   it("displays remove button when in cart", () => {
     const value = { cart: { tuna: { isInCart: true } } };
 
-    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value },
+    });
 
     expect(
       screen.queryByRole("button", { name: /remove/i })
@@ -72,7 +74,9 @@ describe("item card", () => {
     const user = userEvent.setup();
     const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
 
-    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value },
+    });
 
     await user.click(screen.getByRole("button", { name: /remove/i }));
 
