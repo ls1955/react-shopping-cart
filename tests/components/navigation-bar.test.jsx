@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
-import NavigationBar from "../src/components/navigation-bar";
-import renderWithCartProvider from "./helpers/render-with-cart-provider";
+import NavigationBar from "../../src/components/navigation-bar";
+import renderWithCartProvider from "../helpers/render-with-cart-provider";
 
 describe("navigation bar", () => {
   it("has a link for homepage", () => {
