@@ -12,7 +12,7 @@ describe("item card", () => {
     expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
-  it("shows quantity from CartContext", () => {
+  it("shows quantity from CartProvider", () => {
     const value = { cart: { tuna: { quantity: 999 } } };
 
     renderWithCartProvider(<ItemCard title="tuna" />, {
@@ -22,7 +22,7 @@ describe("item card", () => {
     expect(screen.getByRole("spinbutton").value).toEqual("999");
   });
 
-  it("calls setCart from CartContext after update quantity field", async () => {
+  it("calls setCart from CartProvider after update quantity field", async () => {
     const user = userEvent.setup();
     const value = { cart: {}, setCart: vi.fn() };
 
@@ -45,7 +45,7 @@ describe("item card", () => {
     expect(screen.queryByRole("button", { name: /add/i })).toBeInTheDocument();
   });
 
-  it("calls setCart from CartContext after click add button", async () => {
+  it("calls setCart from CartProvider after click add button", async () => {
     const user = userEvent.setup();
     const value = { cart: {}, setCart: vi.fn() };
 
@@ -70,7 +70,7 @@ describe("item card", () => {
     ).toBeInTheDocument();
   });
 
-  it("calls setCart from CartContext after click remove button", async () => {
+  it("calls setCart from CartProvider after click remove button", async () => {
     const user = userEvent.setup();
     const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
 
