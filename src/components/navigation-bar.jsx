@@ -11,7 +11,7 @@ export default function NavigationBar() {
     <nav>
       <Link to="/">Home</Link>
       <Link to="/items">Items</Link>
-      <Link to="cart">Cart ({addedItemCount})</Link>
+      <Link to="/cart">Cart ({addedItemCount})</Link>
     </nav>
   );
 }
