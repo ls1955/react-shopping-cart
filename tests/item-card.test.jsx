@@ -5,77 +5,77 @@ import userEvent from "@testing-library/user-event";
 import ItemCard from "../src/item-card";
 import { CartContext } from "../src/contexts/cart-context";
 
-// Renders *ui* with CartContext.Provider as a wrapper.
-const customRender = (ui, props = {}, { ...renderOptions } = {}) => {
+// Renders *ui* with CartContext.Provider as wrapper.
+const renderWithProvider = (ui, { providerProps = {}, ...options }) => {
   return render(
-    <CartContext.Provider {...props}>{ui}</CartContext.Provider>,
-    renderOptions
+    <CartContext.Provider {...providerProps}>{ui}</CartContext.Provider>,
+    options
   );
 };
 
 describe("item card", () => {
-  it("displays the given title", () => {
+  it("shows given title", () => {
     render(<ItemCard title="tuna" />);
 
     expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
-  it("has a quantity of 1 by default", () => {
-    render(<ItemCard title="tuna" />);
-
-    expect(screen.getByRole("spinbutton").value).toEqual("1");
-  });
-
   it("shows quantity from CartContext", () => {
     const value = { cart: { tuna: { quantity: 999 } } };
 
-    customRender(<ItemCard title="tuna" />, {value});
+    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
 
     expect(screen.getByRole("spinbutton").value).toEqual("999");
   });
 
-  it("calls setCart when user update quantity field", async () => {
+  it("calls setCart from CartContext after update quantity field", async () => {
     const user = userEvent.setup();
-    const value = {cart: {}, setCart: vi.fn()}
+    const value = { cart: {}, setCart: vi.fn() };
 
-    customRender(<ItemCard title="tuna" />, {value});
+    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
 
     await user.type(screen.getByRole("spinbutton"), "999");
 
-    expect(value.setCart).toBeCalled()
+    expect(value.setCart).toBeCalled();
   });
 
-  // it.skip("displays an add button when not in cart", () => {
-  //   render(<ItemCard title={"tuna"} />);
+  it("displays add button when not in cart", () => {
+    const value = { cart: { tuna: { isInCart: false } } };
 
-  //   expect(screen.queryByRole("button", { name: /add/i })).toBeInTheDocument();
-  // });
+    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
 
-  // it.skip("calls onAdd handler when user clicked add button", async () => {
-  //   const user = userEvent.setup();
+    expect(screen.queryByRole("button", { name: /add/i })).toBeInTheDocument();
+  });
 
-  //   render(<ItemCard title={"tuna"} />);
+  it("calls setCart from CartContext after click add button", async () => {
+    const user = userEvent.setup();
+    const value = { cart: {}, setCart: vi.fn() };
 
-  //   await user.click(screen.getByRole("button", { name: /add/i }));
+    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
 
-  //   expect(onAdd).toHaveBeenCalledOnce();
-  // });
+    await user.click(screen.getByRole("button", { name: /add/i }));
 
-  // it.skip("displays a remove button when in cart", () => {
-  //   render(<ItemCard title={"tuna"} isInCart />);
+    expect(value.setCart).toBeCalled();
+  });
 
-  //   expect(
-  //     screen.queryByRole("button", { name: /remove/i })
-  //   ).toBeInTheDocument();
-  // });
+  it("displays remove button when in cart", () => {
+    const value = { cart: { tuna: { isInCart: true } } };
 
-  // it.skip("calls onRemove handler when user clicked remove button", async () => {
-  //   const user = userEvent.setup();
+    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
 
-  //   render(<ItemCard title={"tuna"} isInCart />);
+    expect(
+      screen.queryByRole("button", { name: /remove/i })
+    ).toBeInTheDocument();
+  });
 
-  //   await user.click(screen.getByRole("button", { name: /remove/i }));
+  it("calls setCart from CartContext after click remove button", async () => {
+    const user = userEvent.setup();
+    const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
 
-  //   expect(onRemove).to.toHaveBeenCalledOnce();
-  // });
+    renderWithProvider(<ItemCard title="tuna" />, { providerProps: { value } });
+
+    await user.click(screen.getByRole("button", { name: /remove/i }));
+
+    expect(value.setCart).toBeCalled();
+  });
 });
