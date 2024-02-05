@@ -22,4 +22,13 @@ describe("navigation bar", () => {
     expect(itemsPageLink).toBeInTheDocument();
     expect(itemsPageLink).toHaveAttribute("href", "/items");
   });
+
+  it("has a link for cart page", () => {
+    render(<NavigationBar />, { wrapper: BrowserRouter });
+
+    const cartPageLink = screen.queryByRole("link", { name: /cart/i });
+
+    expect(cartPageLink).toBeInTheDocument();
+    expect(cartPageLink).toHaveAttribute("href", "/cart");
+  });
 });

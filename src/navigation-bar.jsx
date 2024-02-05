@@ -5,6 +5,7 @@ export default function NavigationBar() {
     <nav>
       <Link to="/">Home</Link>
       <Link to="/items">Items</Link>
+      <Link to="cart">Cart</Link>
     </nav>
   );
 }
