@@ -7,9 +7,6 @@ export default function ItemCard({ title }) {
   const { cart, setCart } = useContext(CartContext);
   const { quantity = 1, isInCart = false } = cart?.[title] ?? {};
 
-  const handleQuantity = ({ target: { value } }) => {
-    setCart({ ...cart, [title]: { quantity: value, isInCart } });
-  };
   const handleAdd = () => {
     setCart({ ...cart, [title]: { isInCart: true, quantity } });
   };
@@ -20,11 +17,10 @@ export default function ItemCard({ title }) {
   return (
     <div>
       <p>{title}</p>
-      <input type="number" value={quantity} onChange={handleQuantity} min={0} />
       {isInCart ? (
-        <button onClick={handleRemove}>Remove</button>
+        <button onClick={handleRemove}>Remove from cart</button>
       ) : (
-        <button onClick={handleAdd}>Add</button>
+        <button onClick={handleAdd}>Add to cart</button>
       )}
     </div>
   );

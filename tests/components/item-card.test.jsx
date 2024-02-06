@@ -12,29 +12,6 @@ describe("item card", () => {
     expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
-  it("shows quantity from CartProvider", () => {
-    const value = { cart: { tuna: { quantity: 999 } } };
-
-    renderWithCartProvider(<ItemCard title="tuna" />, {
-      providerProps: { value },
-    });
-
-    expect(screen.getByRole("spinbutton").value).toEqual("999");
-  });
-
-  it("calls setCart from CartProvider after update quantity field", async () => {
-    const user = userEvent.setup();
-    const value = { cart: {}, setCart: vi.fn() };
-
-    renderWithCartProvider(<ItemCard title="tuna" />, {
-      providerProps: { value },
-    });
-
-    await user.type(screen.getByRole("spinbutton"), "999");
-
-    expect(value.setCart).toBeCalled();
-  });
-
   it("displays add button when not in cart", () => {
     const value = { cart: { tuna: { isInCart: false } } };
 
