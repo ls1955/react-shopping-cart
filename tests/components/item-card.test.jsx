@@ -29,7 +29,6 @@ describe("item card", () => {
     renderWithCartProvider(<ItemCard title="tuna" />, {
       providerProps: { value },
     });
-
     await user.click(screen.getByRole("button", { name: /add/i }));
 
     expect(value.setCart).toBeCalled();
@@ -54,7 +53,6 @@ describe("item card", () => {
     renderWithCartProvider(<ItemCard title="tuna" />, {
       providerProps: { value },
     });
-
     await user.click(screen.getByRole("button", { name: /remove/i }));
 
     expect(value.setCart).toBeCalled();
