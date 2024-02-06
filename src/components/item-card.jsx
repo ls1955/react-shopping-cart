@@ -20,7 +20,7 @@ export default function ItemCard({ title }) {
   return (
     <div>
       <p>{title}</p>
-      <input type="number" value={quantity} onChange={handleQuantity} />
+      <input type="number" value={quantity} onChange={handleQuantity} min={0} />
       {isInCart ? (
         <button onClick={handleRemove}>Remove</button>
       ) : (
