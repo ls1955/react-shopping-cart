@@ -14,7 +14,7 @@ export default function CartPage() {
 
   const handleCheckout = () => {
     setIsCheckout(true);
-    setCart({ cart: {}, setCart });
+    setCart({});
   };
 
   return (
