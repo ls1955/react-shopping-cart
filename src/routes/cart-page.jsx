@@ -3,6 +3,7 @@ import { CartContext } from "../contexts/cart-context";
 
 import NavigationBar from "../components/navigation-bar";
 import CartItem from "../components/cart-item";
+import MessageBox from "../components/message-box";
 
 export default function CartPage() {
   const [isCheckout, setIsCheckout] = useState(false);
@@ -22,8 +23,7 @@ export default function CartPage() {
       <NavigationBar />
       {cartItems}
       <button onClick={handleCheckout}>Checkout</button>
-      {/* TODO: Extract out a MessageBox component? */}
-      {isCheckout && <p>Thank you for purchasing.</p>}
+      {isCheckout && <MessageBox>Thank you for purchasing.</MessageBox>}
     </>
   );
 }
