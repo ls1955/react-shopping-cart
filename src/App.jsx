@@ -1,15 +1,29 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import Home from "./routes/home";
+import Router from "./router";
 
-const router = createBrowserRouter([{ path: "/", element: <Home /> }]);
+import { CartContext } from "./contexts/cart-context";
+import data from "./data.json";
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  const [cart, setCart] = useState({});
 
-  return;
-  // TODO:
-  // * Load cart's data via useEffect
-  // * Pass CartContext here
-  // * Create Router
+  useEffect(() => {
+    // TODO: Replace with actual API call
+    const fetchData = async () => {
+      const newCart = Object.fromEntries(
+        data.map(({ title, price, image }) => [title, { price, image }])
+      );
+      setCart(newCart);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      <CartContext.Provider value={{ cart, setCart }}>
+        <Router />
+      </CartContext.Provider>
+    </>
+  );
 }
