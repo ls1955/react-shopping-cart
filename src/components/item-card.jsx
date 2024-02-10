@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { CartContext } from "../contexts/cart-context";
 
+// TODO: Insert Image
 export default function ItemCard({ title }) {
   const { cart, setCart } = useContext(CartContext);
   const { quantity = 1, isInCart = false } = cart?.[title] ?? {};
