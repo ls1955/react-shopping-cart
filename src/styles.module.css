@@ -1,0 +1,18 @@
+.heading {
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    column-gap: 10px;
+}
+
+.navLink {
+    padding: 5px;
+    font-size: 1.25rem;
+    text-decoration: none;
+}
+
+.navLink:hover {
+    background-color: rgb(220, 220, 226);
+}
