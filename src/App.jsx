@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import Router from "./router";
-
 import { CartContext } from "./contexts/cart-context";
 import data from "./data.json";
 
@@ -20,10 +19,10 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <div>
       <CartContext.Provider value={{ cart, setCart }}>
         <Router />
       </CartContext.Provider>
-    </>
+    </div>
   );
 }
