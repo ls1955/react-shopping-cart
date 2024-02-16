@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import PropTypes from "prop-types";
 
+import styles from "../styles.module.css";
 import { CartContext } from "../contexts/cart-context";
 
-// TODO: Insert Image
 export default function ItemCard({ title }) {
   const { cart, setCart } = useContext(CartContext);
-  const { quantity = 1, isInCart = false } = cart?.[title] ?? {};
+  const { image, quantity = 1, isInCart = false } = cart?.[title] ?? {};
 
   const handleAdd = () => {
     setCart({ ...cart, [title]: { isInCart: true, quantity } });
@@ -17,6 +17,7 @@ export default function ItemCard({ title }) {
 
   return (
     <div>
+      <img src={image} alt={title} className={styles.itemCardImage} />
       <p>{title}</p>
       {isInCart ? (
         <button onClick={handleRemove}>Remove from cart</button>
