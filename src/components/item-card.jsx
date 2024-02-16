@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import PropTypes from "prop-types";
 
-import styles from "../styles.module.css";
 import { CartContext } from "../contexts/cart-context";
+
+import styles from "../styles.module.css";
 
 export default function ItemCard({ title }) {
   const { cart, setCart } = useContext(CartContext);
