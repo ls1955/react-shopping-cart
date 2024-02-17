@@ -21,11 +21,21 @@ export default function CartItem({ title }) {
   };
 
   return (
-    <div>
-      <img src={image} alt={title} className={styles.thumbnail} />
-      <p>{title}</p>
-      <input type="number" value={quantity} min={1} onChange={handleUpdate} />
-      <button onClick={handleRemove}>Remove</button>
+    <div className={styles.cardItemContainer}>
+      <div className={styles.cardItemSection}>
+        <img src={image} alt={title} className={styles.thumbnail} />
+        <p>{title}</p>
+      </div>
+      <div className={styles.cardItemSection}>
+        <input
+          type="number"
+          value={quantity}
+          min={1}
+          onChange={handleUpdate}
+          className={styles.quantityInput}
+        />
+        <button onClick={handleRemove}>Remove</button>
+      </div>
     </div>
   );
 }

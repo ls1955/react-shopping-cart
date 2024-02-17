@@ -30,8 +30,22 @@
   object-fit: contain;
 }
 
+.cardItemContainer {
+  display: flex;
+  align-items: center;
+}
+
+.cardItemSection {
+  display: flex;
+  align-items: center;
+}
+
 .thumbnail {
   width: 30px;
   height: 30px;
   object-fit: contain;
+}
+
+.quantityInput {
+  width: 40px;
 }
