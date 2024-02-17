@@ -9,10 +9,9 @@ export default function CartPage() {
   const [isCheckout, setIsCheckout] = useState(false);
 
   const { cart, setCart } = useContext(CartContext);
-  const cartItems = Object.keys(cart).map((title) => (
-    <CartItem key={title} title={title} />
-  ));
-
+  const cartItems = Object.keys(cart)
+    .filter((title) => cart[title].isInCart)
+    .map((title) => <CartItem key={title} title={title} />);
   const handleCheckout = () => {
     setIsCheckout(true);
     setCart({});

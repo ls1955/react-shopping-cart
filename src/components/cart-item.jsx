@@ -11,12 +11,15 @@ export default function CartItem({ title }) {
 
   const handleUpdate = ({ target: { value } }) => {
     // NOTE: What if user manually enter a value <= 0?
-    setCart({ ...cart, [title]: { quantity: value, isInCart: true, image, ...rest } });
+    setCart({
+      ...cart,
+      [title]: { ...rest, quantity: value, image },
+    });
   };
   const handleRemove = () => {
     setCart({
       ...cart,
-      [title]: { isInCart: false, quantity, image, ...rest },
+      [title]: { ...rest, isInCart: false, image, quantity },
     });
   };
 
