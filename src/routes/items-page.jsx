@@ -4,6 +4,8 @@ import NavigationBar from "../components/navigation-bar";
 import ItemCard from "../components/item-card";
 import { CartContext } from "../contexts/cart-context";
 
+import styles from "../styles.module.css";
+
 export default function ItemsPage() {
   const { cart } = useContext(CartContext);
 
@@ -15,7 +17,7 @@ export default function ItemsPage() {
   return (
     <>
       <NavigationBar />
-      {itemCards}
+      <div className={styles.itemCardsContainer}>{itemCards}</div>
     </>
   );
 }
