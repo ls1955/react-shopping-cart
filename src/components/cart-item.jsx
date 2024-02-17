@@ -11,7 +11,7 @@ export default function CartItem({ title }) {
 
   const handleUpdate = ({ target: { value } }) => {
     // NOTE: What if user manually enter a value <= 0?
-    setCart({ ...cart, [title]: { quantity: value, isInCart: true, ...rest } });
+    setCart({ ...cart, [title]: { quantity: value, isInCart: true, image, ...rest } });
   };
   const handleRemove = () => {
     setCart({
