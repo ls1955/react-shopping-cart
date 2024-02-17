@@ -29,3 +29,9 @@
   height: 250px;
   object-fit: contain;
 }
+
+.thumbnail {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
