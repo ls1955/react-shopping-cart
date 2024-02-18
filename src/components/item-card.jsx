@@ -17,7 +17,7 @@ export default function ItemCard({ title }) {
   };
 
   return (
-    <div>
+    <div className={styles.cardContainer}>
       <img src={image} alt={title} className={styles.itemCardImage} />
       <p>{title}</p>
       {isInCart ? (

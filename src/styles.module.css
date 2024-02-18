@@ -28,14 +28,27 @@
   gap: 50px;
 }
 
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .itemCardImage {
   width: 250px;
   height: 250px;
   object-fit: contain;
 }
 
+.cartContainer {
+  width: max(300px, 70%);
+  display: flex;
+  flex-direction: column;
+}
+
 .cardItemContainer {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -52,4 +65,12 @@
 
 .quantityInput {
   width: 40px;
+}
+
+.checkoutButton {
+  justify-self: flex-end;
+  cursor: pointer;
+  font-size: 1.25rem;
+  margin: 20px;
+  padding: 5px;
 }

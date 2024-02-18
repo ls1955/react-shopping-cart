@@ -37,7 +37,7 @@ export default function CartItem({ title }) {
           onChange={handleUpdate}
           className={styles.quantityInput}
         />
-        <button onClick={handleRemove}>Remove</button>
+        <button onClick={handleRemove}>X</button>
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import NavigationBar from "../components/navigation-bar";
 import CartItem from "../components/cart-item";
 import MessageBox from "../components/message-box";
 
+import styles from "../styles.module.css";
+
 export default function CartPage() {
   const [message, setMessage] = useState(null);
 
@@ -26,9 +28,13 @@ export default function CartPage() {
   return (
     <>
       <NavigationBar />
-      {cartItems}
-      <button onClick={handleCheckout}>Checkout</button>
-      {message && <MessageBox>{message}</MessageBox>}
+      <div className={styles.cartContainer}>
+        {cartItems}
+        <button onClick={handleCheckout} className={styles.checkoutButton}>
+          Checkout
+        </button>
+        {message && <MessageBox>{message}</MessageBox>}
+      </div>
     </>
   );
 }
