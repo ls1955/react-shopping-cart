@@ -7,6 +7,13 @@ export default function Home() {
     <>
       <NavigationBar />
       <h1 className={styles.heading}>Welcome to the store</h1>
+      <p className={styles.description}>
+        This project is part of The Odin Project&apos;s curriculum, you could
+        view the{" "}
+        <a href="https://www.theodinproject.com/lessons/react-new-shopping-cart">
+          project description at here
+        </a>
+      </p>
     </>
   );
 }
