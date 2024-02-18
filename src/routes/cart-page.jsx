@@ -15,8 +15,12 @@ export default function CartPage() {
   const handleCheckout = () => {
     if (cartItems.length === 0) return setMessage("Cart is empty.");
 
+    const newCart = {};
+    Object.entries(cart).forEach(([title, { ...props }]) => {
+      newCart[title] = { ...props, isInCart: false };
+    });
+    setCart(newCart);
     setMessage("Thank you for purchasing.");
-    setCart({});
   };
 
   return (
