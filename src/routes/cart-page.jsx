@@ -6,14 +6,16 @@ import CartItem from "../components/cart-item";
 import MessageBox from "../components/message-box";
 
 export default function CartPage() {
-  const [isCheckout, setIsCheckout] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const { cart, setCart } = useContext(CartContext);
   const cartItems = Object.keys(cart)
     .filter((title) => cart[title].isInCart)
     .map((title) => <CartItem key={title} title={title} />);
   const handleCheckout = () => {
-    setIsCheckout(true);
+    if (cartItems.length === 0) return setMessage("Cart is empty.");
+
+    setMessage("Thank you for purchasing.");
     setCart({});
   };
 
@@ -22,7 +24,7 @@ export default function CartPage() {
       <NavigationBar />
       {cartItems}
       <button onClick={handleCheckout}>Checkout</button>
-      {isCheckout && <MessageBox>Thank you for purchasing.</MessageBox>}
+      {message && <MessageBox>{message}</MessageBox>}
     </>
   );
 }
