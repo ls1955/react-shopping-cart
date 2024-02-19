@@ -24,10 +24,10 @@ describe("cart page", () => {
     expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
-  it("shows a checkout button", () => {
+  it("shows an empty cart message when cart is empty", () => {
     render(<CartPage />, { wrapper: BrowserRouter });
 
-    expect(screen.queryByText(/checkout/i)).toBeInTheDocument();
+    expect(screen.queryByText(/empty/i)).toBeInTheDocument();
   });
 
   it("shows checkout message after clicked checkout button", async () => {
