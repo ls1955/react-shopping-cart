@@ -40,7 +40,7 @@ describe("cart item", () => {
     render(<CartItem title="tuna" />);
 
     expect(
-      screen.queryByRole("button", { name: /remove/i })
+      screen.queryByRole("button", { name: /x/i })
     ).toBeInTheDocument();
   });
 
@@ -51,7 +51,7 @@ describe("cart item", () => {
     renderWithCartProvider(<CartItem title="tuna" />, {
       providerProps: { value },
     });
-    await user.click(screen.getByRole("button", { name: /remove/i }));
+    await user.click(screen.getByRole("button", { name: /x/i }));
 
     expect(value.setCart).toBeCalled();
   });
