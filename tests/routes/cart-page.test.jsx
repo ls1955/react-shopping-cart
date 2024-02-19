@@ -30,6 +30,31 @@ describe("cart page", () => {
     expect(screen.queryByText(/empty/i)).toBeInTheDocument();
   });
 
+  it("shows checkout button when cart is not empty", () => {
+    const value = { cart: { tuna: { isInCart: true } } };
+
+    renderWithCartProvider(<CartPage />, {
+      providerProps: { value },
+      wrapper: BrowserRouter,
+    });
+
+    expect(screen.queryByText(/checkout/i)).toBeInTheDocument();
+  });
+
+  it("calls setCart function after clicked checkout button", async () => {
+    const user = userEvent.setup();
+    const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
+
+    renderWithCartProvider(<CartPage />, {
+      providerProps: { value },
+      wrapper: BrowserRouter,
+    });
+
+    await user.click(screen.getByText(/checkout/i));
+
+    expect(value.setCart).toBeCalled();
+  });
+
   it("shows checkout message after clicked checkout button", async () => {
     const user = userEvent.setup();
     const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
