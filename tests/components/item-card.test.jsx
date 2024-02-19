@@ -12,6 +12,16 @@ describe("item card", () => {
     expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
+  it("shows own price", () => {
+    const value = { cart: { tuna: { price: 10 } } };
+
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value },
+    });
+
+    expect(screen.queryByText(/10/)).toBeInTheDocument();
+  });
+
   it("displays add button when not in cart", () => {
     const value = { cart: { tuna: { isInCart: false } } };
 
