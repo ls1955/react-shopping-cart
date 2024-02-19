@@ -15,12 +15,11 @@ export default function CartPage() {
     .filter((title) => cart[title].isInCart)
     .map((title) => <CartItem key={title} title={title} />);
   const handleCheckout = () => {
-    if (cartItems.length === 0) return setMessage("Cart is empty.");
-
     const newCart = {};
     Object.entries(cart).forEach(([title, { ...props }]) => {
       newCart[title] = { ...props, isInCart: false };
     });
+
     setCart(newCart);
     setMessage("Thank you for purchasing.");
   };
@@ -29,10 +28,12 @@ export default function CartPage() {
     <>
       <NavigationBar />
       <div className={styles.cartContainer}>
-        {cartItems}
-        <button onClick={handleCheckout} className={styles.checkoutButton}>
-          Checkout
-        </button>
+        {cartItems.length !== 0 ? cartItems : <p>Cart is empty.</p>}
+        {cartItems.length !== 0 && (
+          <button onClick={handleCheckout} className={styles.checkoutButton}>
+            Checkout
+          </button>
+        )}
         {message && <MessageBox>{message}</MessageBox>}
       </div>
     </>
