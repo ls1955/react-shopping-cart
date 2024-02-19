@@ -14,7 +14,7 @@ describe("cart page", () => {
   });
 
   it("shows cart items", () => {
-    const value = { cart: { tuna: {} } };
+    const value = { cart: { tuna: { isInCart: true } } };
 
     renderWithCartProvider(<CartPage />, {
       providerProps: { value },
