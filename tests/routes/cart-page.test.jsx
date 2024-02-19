@@ -32,8 +32,13 @@ describe("cart page", () => {
 
   it("shows checkout message after clicked checkout button", async () => {
     const user = userEvent.setup();
+    const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
 
-    render(<CartPage />, { wrapper: BrowserRouter });
+    renderWithCartProvider(<CartPage />, {
+      providerProps: { value },
+      wrapper: BrowserRouter,
+    });
+
     await user.click(screen.getByText(/checkout/i));
 
     expect(screen.queryByText(/thank/i)).toBeInTheDocument();
