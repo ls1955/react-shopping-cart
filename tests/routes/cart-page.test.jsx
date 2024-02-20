@@ -6,18 +6,26 @@ import { BrowserRouter } from "react-router-dom";
 import CartPage from "../../src/routes/cart-page";
 import renderWithCartProvider from "../helpers/render-with-cart-provider";
 
+const defaultValue = {
+  quantity: 1,
+  image: null,
+  price: 17.08,
+  isInCart: true,
+};
+
 describe("cart page", () => {
   it("has navigation bar", () => {
-    render(<CartPage />, { wrapper: BrowserRouter });
+    renderWithCartProvider(<CartPage />, {
+      providerProps: { value: { cart: { tuna: defaultValue } } },
+      wrapper: BrowserRouter,
+    });
 
     expect(screen.queryByRole("navigation")).toBeInTheDocument();
   });
 
   it("shows cart items", () => {
-    const value = { cart: { tuna: { isInCart: true } } };
-
     renderWithCartProvider(<CartPage />, {
-      providerProps: { value },
+      providerProps: { value: { cart: { tuna: defaultValue } } },
       wrapper: BrowserRouter,
     });
 
@@ -31,10 +39,8 @@ describe("cart page", () => {
   });
 
   it("shows checkout button when cart is not empty", () => {
-    const value = { cart: { tuna: { isInCart: true } } };
-
     renderWithCartProvider(<CartPage />, {
-      providerProps: { value },
+      providerProps: { value: { cart: { tuna: defaultValue } } },
       wrapper: BrowserRouter,
     });
 
@@ -43,24 +49,27 @@ describe("cart page", () => {
 
   it("calls setCart function after clicked checkout button", async () => {
     const user = userEvent.setup();
-    const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
+    const setCart = vi.fn();
 
     renderWithCartProvider(<CartPage />, {
-      providerProps: { value },
+      providerProps: {
+        value: { cart: { tuna: defaultValue }, setCart },
+      },
       wrapper: BrowserRouter,
     });
 
     await user.click(screen.getByText(/checkout/i));
 
-    expect(value.setCart).toBeCalled();
+    expect(setCart).toBeCalled();
   });
 
   it("shows checkout message after clicked checkout button", async () => {
     const user = userEvent.setup();
-    const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
 
     renderWithCartProvider(<CartPage />, {
-      providerProps: { value },
+      providerProps: {
+        value: { cart: { tuna: defaultValue }, setCart: () => {} },
+      },
       wrapper: BrowserRouter,
     });
 
