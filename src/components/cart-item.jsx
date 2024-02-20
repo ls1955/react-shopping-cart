@@ -7,19 +7,19 @@ import styles from "../styles.module.css";
 
 export default function CartItem({ title }) {
   const { cart, setCart } = useContext(CartContext);
-  const { quantity = 1, image = null, ...rest } = cart?.[title] ?? {};
+  const { quantity = 1, image = null, price = 0, ...rest } = cart?.[title] ?? {};
 
   const handleUpdate = ({ target: { value } }) => {
     // NOTE: What if user manually enter a value <= 0?
     setCart({
       ...cart,
-      [title]: { ...rest, quantity: value, image },
+      [title]: { ...rest, quantity: value, image, price },
     });
   };
   const handleRemove = () => {
     setCart({
       ...cart,
-      [title]: { ...rest, isInCart: false, image, quantity },
+      [title]: { ...rest, isInCart: false, image, quantity, price },
     });
   };
 
@@ -38,6 +38,7 @@ export default function CartItem({ title }) {
           className={styles.quantityInput}
         />
         <button onClick={handleRemove}>X</button>
+        <p>${price.toFixed(2)}</p>
       </div>
     </div>
   );
