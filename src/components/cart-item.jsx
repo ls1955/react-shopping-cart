@@ -7,7 +7,7 @@ import styles from "../styles.module.css";
 
 export default function CartItem({ title }) {
   const { cart, setCart } = useContext(CartContext);
-  const { quantity = 1, image = null, price = 0, ...rest } = cart?.[title] ?? {};
+  const { quantity, image, price, ...rest } = cart[title];
 
   const handleUpdate = ({ target: { value } }) => {
     // NOTE: What if user manually enter a value <= 0?
