@@ -7,18 +7,13 @@ import styles from "../styles.module.css";
 
 export default function ItemCard({ title }) {
   const { cart, setCart } = useContext(CartContext);
-  const {
-    image,
-    quantity = 1,
-    isInCart = false,
-    price = -1,
-  } = cart?.[title] ?? {};
+  const { image, isInCart, price, ...rest } = cart[title];
 
   const handleAdd = () => {
-    setCart({ ...cart, [title]: { isInCart: true, image, quantity } });
+    setCart({ ...cart, [title]: { isInCart: true, image, price, ...rest } });
   };
   const handleRemove = () => {
-    setCart({ ...cart, [title]: { isInCart: false, image, quantity } });
+    setCart({ ...cart, [title]: { isInCart: false, image, price, ...rest } });
   };
 
   return (
