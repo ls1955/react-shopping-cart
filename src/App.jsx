@@ -11,7 +11,7 @@ export default function App() {
     // TODO: Replace with actual API call
     const fetchData = async () => {
       const newCart = Object.fromEntries(
-        data.map(({ title, price, image }) => [title, { price, image }])
+        data.map(({ title, price, image }) => [title, { price, image, quantity: 1 }])
       );
       setCart(newCart);
     };
