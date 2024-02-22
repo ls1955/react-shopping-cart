@@ -74,4 +74,14 @@ describe("cart item", () => {
 
     expect(screen.queryByText(/12\.01/)).toBeInTheDocument();
   });
+
+  it("shows price that multiply with chosen quantity", () => {
+    renderWithCartProvider(<CartItem title="tuna" />, {
+      providerProps: {
+        value: {cart: {tuna: {...defaultValue, quantity: 2}}}
+      }
+    })
+
+    expect(screen.queryByText(/34\.16/)).toBeInTheDocument();
+  })
 });

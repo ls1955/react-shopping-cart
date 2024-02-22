@@ -23,6 +23,8 @@ export default function CartItem({ title }) {
     });
   };
 
+  const totalPrice = price * quantity;
+
   return (
     <div className={styles.cardItemContainer}>
       <div className={styles.cardItemSection}>
@@ -38,7 +40,7 @@ export default function CartItem({ title }) {
           className={styles.quantityInput}
         />
         <button onClick={handleRemove}>X</button>
-        <p>${price.toFixed(2)}</p>
+        <p>${totalPrice.toFixed(2)}</p>
       </div>
     </div>
   );
