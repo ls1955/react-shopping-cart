@@ -1,32 +1,39 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import ItemCard from "../../src/components/item-card";
 import renderWithCartProvider from "../helpers/render-with-cart-provider";
 
+const defaultValue = {
+  quantity: 1,
+  image: null,
+  price: 17.08,
+  isInCart: true,
+};
+
 describe("item card", () => {
   it("shows given title", () => {
-    render(<ItemCard title="tuna" />);
+    renderWithCartProvider(<ItemCard title="tuna" />, {
+      providerProps: { value: { cart: { tuna: defaultValue } } },
+    });
 
     expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
   it("shows own price", () => {
-    const value = { cart: { tuna: { price: 10 } } };
-
     renderWithCartProvider(<ItemCard title="tuna" />, {
-      providerProps: { value },
+      providerProps: { value: { cart: { tuna: defaultValue, price: 17.08 } } },
     });
 
-    expect(screen.queryByText(/10/)).toBeInTheDocument();
+    expect(screen.queryByText(/17\.08/)).toBeInTheDocument();
   });
 
   it("displays add button when not in cart", () => {
-    const value = { cart: { tuna: { isInCart: false } } };
-
     renderWithCartProvider(<ItemCard title="tuna" />, {
-      providerProps: { value },
+      providerProps: {
+        value: { cart: { tuna: { ...defaultValue, isInCart: false } } },
+      },
     });
 
     expect(screen.queryByRole("button", { name: /add/i })).toBeInTheDocument();
@@ -34,7 +41,10 @@ describe("item card", () => {
 
   it("calls setCart from CartProvider after click add button", async () => {
     const user = userEvent.setup();
-    const value = { cart: {}, setCart: vi.fn() };
+    const value = {
+      cart: { tuna: { ...defaultValue, isInCart: false } },
+      setCart: vi.fn(),
+    };
 
     renderWithCartProvider(<ItemCard title="tuna" />, {
       providerProps: { value },
@@ -45,10 +55,10 @@ describe("item card", () => {
   });
 
   it("displays remove button when in cart", () => {
-    const value = { cart: { tuna: { isInCart: true } } };
-
     renderWithCartProvider(<ItemCard title="tuna" />, {
-      providerProps: { value },
+      providerProps: {
+        value: { cart: { tuna: { ...defaultValue, isInCart: true } } },
+      },
     });
 
     expect(
@@ -58,7 +68,10 @@ describe("item card", () => {
 
   it("calls setCart from CartProvider after click remove button", async () => {
     const user = userEvent.setup();
-    const value = { cart: { tuna: { isInCart: true } }, setCart: vi.fn() };
+    const value = {
+      cart: { tuna: { ...defaultValue, isInCart: true } },
+      setCart: vi.fn(),
+    };
 
     renderWithCartProvider(<ItemCard title="tuna" />, {
       providerProps: { value },
