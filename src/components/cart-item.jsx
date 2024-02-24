@@ -36,6 +36,7 @@ export default function CartItem({ title }) {
           type="number"
           value={quantity}
           min={1}
+          max={999}
           onChange={handleUpdate}
           className={styles.quantityInput}
         />
