@@ -8,10 +8,16 @@ export default function App() {
   const [cart, setCart] = useState({});
 
   useEffect(() => {
-    // TODO: Replace with actual API call
     const fetchData = async () => {
+      const response = await fetch(
+        "https://fakestoreapi.com/products?limit=20"
+      );
+      const json = await response.json();
       const newCart = Object.fromEntries(
-        data.map(({ title, price, image }) => [title, { price, image, quantity: 1 }])
+        json.map(({ title, price, image }) => [
+          title,
+          { price, image, quantity: 1 },
+        ])
       );
       setCart(newCart);
     };
