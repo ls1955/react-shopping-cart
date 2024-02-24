@@ -19,7 +19,7 @@ export default function ItemCard({ title }) {
   return (
     <div className={styles.cardContainer}>
       <img src={image} alt={title} className={styles.itemCardImage} />
-      <p>{title}</p>
+      <p className={styles.cardItemTitle}>{title}</p>
       <p>${price.toFixed(2)}</p>
       {isInCart ? (
         <button onClick={handleRemove}>Remove from cart</button>
