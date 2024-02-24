@@ -32,6 +32,23 @@ describe("cart page", () => {
     expect(screen.queryByText("tuna")).toBeInTheDocument();
   });
 
+  it("shows total price of all selected items", () => {
+    const value = {
+      cart: {
+        tuna: defaultValue,
+        ham: defaultValue,
+        kuma: defaultValue,
+      },
+    };
+
+    renderWithCartProvider(<CartPage />, {
+      providerProps: { value },
+      wrapper: BrowserRouter,
+    });
+
+    expect(screen.queryByText(/51\.24/)).toBeInTheDocument();
+  });
+
   it("shows an empty cart message when cart is empty", () => {
     render(<CartPage />, { wrapper: BrowserRouter });
 

@@ -24,11 +24,17 @@ export default function CartPage() {
     setMessage("Thank you for purchasing.");
   };
 
+  const totalPrice = Object.values(cart).reduce(
+    (memo, { price, quantity }) => memo + price * quantity,
+    0
+  );
+
   return (
     <>
       <NavigationBar />
       <div className={styles.cartContainer}>
         {cartItems.length !== 0 ? cartItems : <p>Cart is empty.</p>}
+        {cartItems.length !== 0 && <p>Total: ${totalPrice.toFixed(2)}</p>}
         {cartItems.length !== 0 && (
           <button onClick={handleCheckout} className={styles.checkoutButton}>
             Checkout
