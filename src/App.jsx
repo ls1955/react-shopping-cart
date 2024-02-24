@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import Router from "./router";
 import { CartContext } from "./contexts/cart-context";
-import data from "./data.json";
+import data from "./sample_data.json";
 
 export default function App() {
   const [cart, setCart] = useState({});
