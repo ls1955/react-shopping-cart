@@ -15,6 +15,10 @@ export default function CartPage() {
     .filter((title) => cart[title].isInCart)
     .map((title) => <CartItem key={title} title={title} />);
   const handleCheckout = () => {
+    if (hasInvalidQuantity()) {
+      return setMessage("All quantity must be between 1 and 999.");
+    }
+
     const newCart = {};
     Object.entries(cart).forEach(([title, { ...props }]) => {
       newCart[title] = { ...props, isInCart: false };
@@ -23,6 +27,10 @@ export default function CartPage() {
     setCart(newCart);
     setMessage("Thank you for purchasing.");
   };
+
+  const hasInvalidQuantity = () => {
+    return Object.values(cart).some(({ quantity }) => +quantity <= 0 || +quantity > 999);
+  }
 
   const totalPrice = Object.values(cart).reduce(
     (memo, { price, quantity }) => memo + price * quantity,
